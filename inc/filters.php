@@ -19,7 +19,8 @@ function uploadcare_image_downsize($value = false, $id, $size = 'medium') {
     if($sz) {
         // chop filename part
         $url = preg_replace('/[^\/]*$/', '', $uc_url);
-        $url .= '-/stretch/off/-/scale_crop/' . $sz . '/';
+        // included with watermark image
+        $url .= '-/stretch/off/-/scale_crop/' . $sz . '/-/overlay/'.get_option('uploadcare_watermark_uuid').'/'.get_option('uploadcare_watermark_relative_dimensions').'/'.get_option('uploadcare_watermark_relative_coordinates').'/'.get_option('uploadcare_watermark_opacity').'/';
     } else {
         $url = $uc_url;
     }
