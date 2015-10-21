@@ -274,3 +274,23 @@ add_action('admin_menu', 'uploadcare_settings_actions');
 function uploadcare_settings_actions() {
     add_options_page('Uploadcare', 'Uploadcare', 'upload_files', 'uploadcare', 'uploadcare_settings');
 }
+
+/**
+ * Fetch Uploadcare watermark/overlay settings from admin->settings->uploadcare.
+ */
+add_action('wp_ajax_uploadcare_watermark', 'uploadcare_watermark');
+function uploadcare_watermark()
+{
+    $uc_watermark_image_uuid = get_option('uploadcare_watermark_uuid');
+    $uploadcare_watermark_relative_dimensions = get_option('uploadcare_watermark_relative_dimensions');
+    $uploadcare_watermark_relative_coordinates = get_option('uploadcare_watermark_relative_coordinates');
+    $uploadcare_watermark_opacity = get_option('uploadcare_watermark_opacity');
+
+    echo "{\"action\" : \"overlay\",
+        \"uuid\":\"$uc_watermark_image_uuid\",
+        \"dimensions\":\"$uploadcare_watermark_relative_dimensions\",
+        \"coordinates\":\"$uploadcare_watermark_relative_coordinates\",
+        \"opacity\":\"$uploadcare_watermark_opacity\"
+    }";
+    die;
+}
