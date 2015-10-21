@@ -103,6 +103,28 @@ if(isset($_POST['uploadcare_hidden']) && $_POST['uploadcare_hidden'] == 'Y') {
         <p>
             <textarea name="uploadcare_finetuning" rows="10" cols="50"><?php echo stripcslashes($uploadcare_finetuning); ?></textarea>
         </p>
+        <h3>Watermark</h3>
+        <!-- https://uploadcare.com/documentation/cdn/#operation-overlay -->
+        <p>
+            <?php _e("Watermark image UUID: " ); ?>
+            <input type="text" name="uploadcare_watermark_uuid" value="<?php echo $uploadcare_watermark_uuid; ?>" size="20">
+            <?php _e('ex: 25e3f85b-e94e-46b9-87d6-48e662b542a7'); ?>
+        </p>
+        <p>
+            <?php _e("Watermark Relative Dimensions: " ); ?>
+            <input type="text" name="uploadcare_watermark_relative_dimensions" value="<?php echo $uploadcare_watermark_relative_dimensions; ?>" size="20">
+            <?php _e('ex: 100x100 or 10px10p'); ?>
+        </p>
+        <p>
+            <?php _e("Watermark Relative Coordinates: " ); ?>
+            <input type="text" name="uploadcare_watermark_relative_coordinates" value="<?php echo $uploadcare_watermark_relative_coordinates; ?>" size="20">
+            <?php _e('ex: 15px70p'); ?>
+        </p>
+        <p>
+            <?php _e("Watermark Opacity: " ); ?>
+            <input type="text" name="uploadcare_watermark_opacity" value="<?php echo $uploadcare_watermark_opacity; ?>" size="20">
+            <?php _e('ex: 30p'); ?>
+        </p>
         <p class="submit">
         <?php submit_button(); ?>
         </p>
