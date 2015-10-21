@@ -23,9 +23,14 @@ function ucStoreImg(fileInfo, callback) {
 }
 
 function ucAddImg(fileInfo) {
+  var overlay = '';
+  ucWatermarkImg(fileInfo, function(response) {
+    var result = JSON.parse(response);
+    overlay = '-/' + result.action + '/' + result.uuid + '/' + result.dimensions + '/' + result.coordinates + '/' + result.opacity;
+  });
   ucStoreImg(fileInfo, function(response) {
     if (fileInfo.isImage) {
-      var $img = '<img src="' + fileInfo.cdnUrl + '\" alt="' + fileInfo.name + '"/>';
+      var $img = '<img src="' + fileInfo.cdnUrl + overlay +'\" alt="' + fileInfo.name + '"/>';
       if(UPLOADCARE_CONF.original) {
         window.send_to_editor('<a href="' + UPLOADCARE_CDN_BASE + fileInfo.uuid + '/">' + $img + '</a>');
       } else {
@@ -107,6 +112,24 @@ function ucPostUploadUiBtn() {
         });
       }
     });
+  });
+}
+
+/**
+ * Uploadcare watermark.
+ * @param fileInfo
+ * @param callback
+ */
+function ucWatermarkImg(fileInfo, callback) {
+  // get the watermark image
+  var data = {
+    'action': 'uploadcare_watermark',
+    'file_id': fileInfo.uuid
+  };
+  jQuery.post(ajaxurl, data, function(response) {
+    if (callback) {
+      callback(response);
+    }
   });
 }
 
